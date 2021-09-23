@@ -32,13 +32,13 @@ pipeline {
         }        
         stage('Copy-load') {
             steps {
-                echo 'Copying module to CICS env..'
+                echo 'Copying module from QAT to PROD CICS env..'
                 sh 'gulp copy-load'
             }
         }
         stage('Copy-dbrm') {
             steps {
-                echo 'Copying dbrm to db2 env for db2 bind..'
+                echo 'Copying dbrm from QAT to PROD for db2 bind..'
                 sh 'gulp copy-dbrm'
             }
         }
@@ -57,7 +57,7 @@ pipeline {
         stage('Test-tran') {
             steps {
                 echo 'Testing transaction..'
-      //          sh 'gulp test-tran'
+                sh 'gulp test-tran'
             }
         }
          stage('Verify-data') {
