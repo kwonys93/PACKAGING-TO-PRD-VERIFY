@@ -24,31 +24,12 @@ pipeline {
 
     }
     stages {
-        stage('Update-cobol') {
+        stage('execute-package') {
             steps {
-                sh 'gulp --tasks'
-                echo 'Updating cobol source code in Endevor..'
-                sh 'gulp update-cobol'
+                echo 'executing package-moving element from TEST to QAT..'
+                sh 'gulp execute-package'
             }
-        }
-        stage('Build-cobol') {
-            steps {
-                echo 'Building cobol..'
-                sh 'gulp build-cobol'
-            }
-        }
-        stage('Build-lnk') {
-            steps {
-                echo 'Building module to CICS..'
-                sh 'gulp build-lnk'
-            }
-        }
-        stage('Copy-load') {
-            steps {
-                echo 'Copying module to CICS env..'
-                sh 'gulp copy-load'
-            }
-        }
+        }        
         stage('Copy-dbrm') {
             steps {
                 echo 'Copying dbrm to db2 env for db2 bind..'
@@ -77,31 +58,6 @@ pipeline {
             steps {
                 echo 'verifying data for the test result..'
                 sh 'gulp verify-data'
-            }
-        }
-        stage('create-package') {
-            steps {
-               sh 'gulp --tasks'
-                echo 'Creating package in Endevor..'
-               sh 'gulp create-package'
-            }
-        }
-        stage('cast-package') {
-            steps {
-                echo 'casting cobol..'
-                sh 'gulp cast-package'
-            }
-        }
-        stage('approve-package') {
-            steps {
-                echo 'approving the package..'
-                sh 'gulp approve-package'
-            }
-        }
-        stage('execute-package') {
-            steps {
-                echo 'executing package-moving element from TEST to QAT..'
-                sh 'gulp execute-package'
             }
         }
         /*
